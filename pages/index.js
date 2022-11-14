@@ -31,8 +31,12 @@ const Index = ({ games }) => {
   return (
     <>
       <div>HOME PAGE</div>
-      <button onClick={addGame}>ADD</button>
-      <button onClick={deleteMany}>DELETE</button>
+      <button onClick={addGame} disabled>
+        ADD
+      </button>
+      <button onClick={deleteMany} disabled>
+        DELETE
+      </button>
       {games.map((game) => (
         <div key={game._id}>
           {game.HomeTeam} - {game.AwayTeam} : {game.FTHG} - {game.FTAG} :{" "}

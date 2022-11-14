@@ -27,8 +27,6 @@ export default async function handler(req, res) {
       break;
     case "DELETE":
       try {
-        // console.log("req.body :>> ", req.body);
-        // console.log("prem :>> ", prem);
         const game = await Game.deleteMany({ Div: { $exists: false } });
         res.status(201).json(game);
       } catch (error) {

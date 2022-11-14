@@ -1,5 +1,5 @@
 * {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   box-sizing: border-box;
 }
 
@@ -34,7 +34,9 @@
 .grid {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 /* Styles for Cards */

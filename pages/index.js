@@ -1,65 +1,62 @@
-import Link from 'next/link'
-import dbConnect from '../lib/dbConnect'
-import Pet from '../models/Pet'
+import Link from "next/link";
+import dbConnect from "../lib/dbConnect";
+import Game from "../models/Game";
+import axios from "axios";
+import prem from "/public/stats/en_prem_21-22.json";
 
-const Index = ({ pets }) => (
-  <>
-    {/* Create a card for each pet */}
-    {pets.map((pet) => (
-      <div key={pet._id}>
-        <div className="card">
-          <img src={pet.image_url} />
-          <h5 className="pet-name">{pet.name}</h5>
-          <div className="main-content">
-            <p className="pet-name">{pet.name}</p>
-            <p className="owner">Owner: {pet.owner_name}</p>
+const Index = ({ games }) => {
+  console.log("games :>> ", games);
 
-            {/* Extra Pet Info: Likes and Dislikes */}
-            <div className="likes info">
-              <p className="label">Likes</p>
-              <ul>
-                {pet.likes.map((data, index) => (
-                  <li key={index}>{data} </li>
-                ))}
-              </ul>
-            </div>
-            <div className="dislikes info">
-              <p className="label">Dislikes</p>
-              <ul>
-                {pet.dislikes.map((data, index) => (
-                  <li key={index}>{data} </li>
-                ))}
-              </ul>
-            </div>
+  function getAll() {
+    return axios.get("/api/add").then((res) => res);
+  }
 
-            <div className="btn-container">
-              <Link href="/[id]/edit" as={`/${pet._id}/edit`} legacyBehavior>
-                <button className="btn edit">Edit</button>
-              </Link>
-              <Link href="/[id]" as={`/${pet._id}`} legacyBehavior>
-                <button className="btn view">View</button>
-              </Link>
-            </div>
-          </div>
+  function addGame() {
+    axios
+      .post("/api/add", {
+        name: "NIKOS",
+      })
+      .then((res) => {
+        console.log("game ADDED :>> ", res.data);
+        getAll().then((res) => console.log("res :>> ", res));
+      });
+  }
+  function deleteMany() {
+    axios.delete("/api/add").then((res) => {
+      console.log("games deleted :>> ", res.data);
+      getAll().then((res) => console.log("res :>> ", res));
+    });
+  }
+
+  return (
+    <>
+      <div>HOME PAGE</div>
+      <button onClick={addGame}>ADD</button>
+      <button onClick={deleteMany}>DELETE</button>
+      {games.map((game) => (
+        <div key={game._id}>
+          {game.HomeTeam} - {game.AwayTeam} : {game.FTHG} - {game.FTAG} :{" "}
+          {game.HTHG} - {game.HTAG}
         </div>
-      </div>
-    ))}
-  </>
-)
+      ))}
+    </>
+  );
+};
 
 /* Retrieves pet(s) data from mongodb database */
 export async function getServerSideProps() {
-  await dbConnect()
+  await dbConnect();
 
   /* find all the data in our database */
-  const result = await Pet.find({})
-  const pets = result.map((doc) => {
-    const pet = doc.toObject()
-    pet._id = pet._id.toString()
-    return pet
-  })
+  const res = await Game.find({});
+  console.log("result :>> ", res);
+  const games = res.map((v) => {
+    const game = v.toObject();
+    game._id = game._id.toString();
+    return game;
+  });
 
-  return { props: { pets: pets } }
+  return { props: { games } };
 }
 
-export default Index
+export default Index;

@@ -8,10 +8,16 @@ export default async function handler(req, res) {
 
   switch (method) {
     case "GET":
+      console.log("req.query :>> ", req.query);
       try {
-        let q = Game.find({})
-        q.where("HomeTeam", req.query.ht)
-        const games = await q.exec()
+        let q = Game.find({});
+        req.query.ht != "all" && q.where("HomeTeam", req.query.ht);
+        req.query.at != "all" && q.where("AwayTeam", req.query.at);
+        req.query.ftr != "all" && q.where("FTR", req.query.ftr);
+        req.query.htr != "all" && q.where("HTR", req.query.htr);
+        q.where("FTHG", [0, 1]);
+
+        const games = await q.exec();
         // const games = await Game.find({})
         //   .where("HomeTeam")
         //   .in(["Leeds"])

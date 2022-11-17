@@ -3,10 +3,11 @@ import "../css/form.css";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import { ChakraProvider } from '@chakra-ui/react'
 
 function MyApp({ Component, pageProps }) {
   return (
-    <>
+    <ChakraProvider>
       <Head>
         <title>Draws App</title>
       </Head>
@@ -28,7 +29,7 @@ function MyApp({ Component, pageProps }) {
       <div className="grid wrapper">
         <Component {...pageProps} />
       </div>
-    </>
+    </ChakraProvider>
   );
 }
 

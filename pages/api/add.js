@@ -25,6 +25,14 @@ export default async function handler(req, res) {
         res.status(400).json({ success: false });
       }
       break;
+    case "PUT":
+      try {
+        const game = await Game.updateMany({ Div: { $exists: true }},{Year:2022});
+        res.status(201).json(game);
+      } catch (error) {
+        res.status(400).json({ success: false, error });
+      }
+      break;
     case "DELETE":
       try {
         const game = await Game.deleteMany({ Div: { $exists: false } });

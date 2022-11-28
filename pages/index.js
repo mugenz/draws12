@@ -29,8 +29,8 @@ const Index = ({ teams }) => {
   console.log("teams :>> ", teams);
   const [games, setGames] = useState([]);
   const [values, setValues] = useState({
-    ht: "",
-    at: "",
+    ht: "all",
+    at: "all",
     ftr: "all",
     htr: "all",
   });
@@ -62,10 +62,13 @@ const Index = ({ teams }) => {
 
   function getData(e, v) {
     e.preventDefault();
-    console.log("e.target :>> ", e.target);
-    console.log("e.target :>> ", v);
-    return;
-    const { ht, at, ftr, htr } = values;
+    console.log("values from state :>> ", values);
+    // return;
+    const ht = e.target[0].value;
+    const at = e.target[1].value;
+    const ftr = e.target[2].value;
+    const htr = e.target[3].value;
+
 
     if (ht == "" || at == "") return;
     const params = { ht, at, ftr, htr };
@@ -78,7 +81,7 @@ const Index = ({ teams }) => {
   console.log("games :>> ", games);
   return (
     <>
-      <div>HOME PAGE</div>
+    <div>HOME PAGE</div>
       <button onClick={addGame} disabled>
         ADD
       </button>
@@ -88,9 +91,9 @@ const Index = ({ teams }) => {
       <Center bg="gray.300">fields with * are required</Center>
       <form style={{ width: "100%" }} onSubmit={getData}>
         <HStack>
-          <FormControl isRequired>
-            <FormLabel>Amount</FormLabel>
-            <Select id="ht" onChange={formValues} placeholder="Home Team *">
+          <FormControl>
+            <FormLabel>Home Team</FormLabel>
+            <Select id="ht" onChange={formValues}>
               <option key="all" value="all" defaultValue="all">
                 ALL
               </option>
@@ -105,7 +108,9 @@ const Index = ({ teams }) => {
               })}
             </Select>
           </FormControl>
-          <Select id="at" onChange={formValues} placeholder="Away Team *">
+          <FormControl>
+            <FormLabel>Away Team</FormLabel>
+          <Select id="at" onChange={formValues}>
             <option key="all" value="all">
               ALL
             </option>
@@ -119,7 +124,13 @@ const Index = ({ teams }) => {
               );
             })}
           </Select>
-          <Select id="ftr" onChange={formValues} placeholder="Full Time Result">
+          </FormControl>
+          <FormControl>
+            <FormLabel>Full Time Result</FormLabel>
+          <Select id="ftr" onChange={formValues}>
+            <option key="all" value="all">
+              All
+            </option>
             <option key="home" value="H">
               Home
             </option>
@@ -130,7 +141,13 @@ const Index = ({ teams }) => {
               Away
             </option>
           </Select>
-          <Select id="htr" onChange={formValues} placeholder="Half Time Result">
+          </FormControl>
+          <FormControl>
+          <FormLabel>Half Time Result</FormLabel>
+          <Select id="htr" onChange={formValues}>
+            <option key="all" value="all">
+              All
+            </option>
             <option key="home" value="H">
               Home
             </option>
@@ -141,6 +158,7 @@ const Index = ({ teams }) => {
               Away
             </option>
           </Select>
+          </FormControl>
           <Button type="submit">GO!</Button>
         </HStack>
       </form>
@@ -170,49 +188,6 @@ const Index = ({ teams }) => {
           </Tbody>
         </Table>
       </TableContainer>
-      {/* 
-      <Flex width="100%">
-        <Center w="full" h="70px">
-          Teams
-        </Center>
-        <Center w="full" h="70px">
-          FT
-        </Center>
-        <Center w="full" h="70px">
-          HT
-        </Center>
-      </Flex>
-      {games.map((g) => (
-        <Flex key={g._id} w="100%">
-          <Flex direction="column" width="100%">
-            <Center w="full" h="30px">
-              {g.HomeTeam}
-            </Center>
-            <Center w="full" h="30px">
-              {g.AwayTeam}
-            </Center>
-            <Divider />
-          </Flex>
-          <Flex direction="column" width="100%">
-            <Center w="full" h="30px">
-              {g.FTHG}
-            </Center>
-            <Center w="full" h="30px">
-              {g.FTAG}
-            </Center>
-            <Divider />
-          </Flex>
-          <Flex direction="column" width="100%">
-            <Center w="full" h="30px">
-              {g.HTHG}
-            </Center>
-            <Center w="full" h="30px">
-              {g.HTAG}
-            </Center>
-            <Divider />
-          </Flex>
-        </Flex>
-      ))} */}
     </>
   );
 };

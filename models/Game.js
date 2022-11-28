@@ -5,6 +5,9 @@ const GameSchema = new mongoose.Schema({
   Div: {
     type: String,
   },
+  Year: {
+    type: String
+  },
   Date: {
     type: String,
   },

@@ -15,7 +15,7 @@ export default async function handler(req, res) {
         req.query.at != "all" && q.where("AwayTeam", req.query.at);
         req.query.ftr != "all" && q.where("FTR", req.query.ftr);
         req.query.htr != "all" && q.where("HTR", req.query.htr);
-        q.where("FTHG", [0, 1]);
+        // q.where("FTHG", [0, 1]);
 
         const games = await q.exec();
         // const games = await Game.find({})
